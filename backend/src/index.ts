@@ -21,6 +21,16 @@ app.post('/webhooks/clerk', rawJson ,(req, res) => {
 
 })
 
+
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    port: process.env.PORT,
+    nodeEnv: process.env.NODE_ENV,
+  });
+});
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
@@ -53,7 +63,8 @@ if(fs.existsSync(publicDir)){
 }
 
 
+const Env = getEnv();
 
-app.listen(env.PORT, '0.0.0.0', () => {
-  console.log(`Server is running on port ${env.PORT}`);
+app.listen(Env.PORT, '0.0.0.0', () => {
+  console.log(`Server is running on port ${Env.PORT}`);
 });
